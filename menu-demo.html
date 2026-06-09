@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>La Maison — Menu</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold:       #c9a84c;
+    --gold-light: #e8c96a;
+    --gold-dim:   rgba(201,168,76,0.15);
+    --bg:         #0d0d0d;
+    --bg2:        #141414;
+    --bg3:        #1c1c1c;
+    --card:       #181818;
+    --border:     rgba(201,168,76,0.2);
+    --text:       #f0ebe0;
+    --muted:      #888;
+    --white:      #ffffff;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px 24px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(201,168,76,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(201,168,76,0.06) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse 90% 70% at 50% 30%, black 20%, transparent 80%);
+  }
+
+  .hero-ornament {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+  }
+  .ornament-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold));
+  }
+  .ornament-line.right {
+    background: linear-gradient(90deg, var(--gold), transparent);
+  }
+  .ornament-diamond {
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+  }
+
+  .hero-label {
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 500;
+    opacity: 0;
+    animation: fadeUp 1s 0.3s forwards;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(64px, 14vw, 130px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    color: var(--text);
+    position: relative;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+  }
+
+  .hero-divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 36px 0;
+    opacity: 0;
+    animation: fadeUp 1s 0.9s forwards;
+  }
+  .hero-divider span { width: 40px; height: 1px; background: var(--border); }
+  .hero-divider i { color: var(--gold); font-size: 14px; }
+
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--muted);
+    opacity: 0;
+    animation: fadeUp 1s 1.1s forwards;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeUp 1s 1.4s forwards;
+    cursor: pointer;
+    text-decoration: none;
+  }
+  .hero-scroll span {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── NAV ── */
+  .menu-nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(13,13,13,0.92);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+  }
+
+  .menu-nav-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .menu-nav-inner::-webkit-scrollbar { display: none; }
+
+  .nav-tab {
+    flex-shrink: 0;
+    padding: 20px 24px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.3s, border-color 0.3s;
+    white-space: nowrap;
+    background: none;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  /* ── SECTION HEADER ── */
+  .section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 80px 24px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 64px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+  .section-header.visible { opacity: 1; transform: translateY(0); }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 6px 16px;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 6vw, 56px);
+    font-weight: 600;
+    line-height: 1.1;
+    color: var(--text);
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .section-rule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+  }
+  .section-rule span { width: 32px; height: 1px; background: var(--border); }
+  .section-rule i { color: var(--gold); font-size: 12px; }
+
+  /* ── MENU GRID ── */
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+  }
+
+  .menu-item {
+    background: var(--card);
+    padding: 32px;
+    border: 1px solid transparent;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: border-color 0.3s, background 0.3s;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s, border-color 0.3s, background 0.3s;
+  }
+
+  .menu-item.visible { opacity: 1; transform: translateY(0); }
+
+  .menu-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--gold-dim);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .menu-item:hover { border-color: var(--border); }
+  .menu-item:hover::before { opacity: 1; }
+
+  .item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 12px;
+  }
+
+  .item-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  .item-price {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--gold);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .item-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.7;
+    margin-bottom: 16px;
+  }
+
+  .item-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .tag {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--border);
+    padding: 3px 8px;
+  }
+
+  .tag.spicy { color: #e06c6c; border-color: rgba(224,108,108,0.3); }
+  .tag.veg   { color: #6cbe6c; border-color: rgba(108,190,108,0.3); }
+  .tag.new   { color: var(--gold); background: var(--gold-dim); }
+
+  .item-number {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-size: 48px;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: rgba(201,168,76,0.06);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  /* ── FEATURED ITEM ── */
+  .menu-item.featured {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 48px;
+    background: linear-gradient(135deg, var(--card), var(--bg3));
+    border: 1px solid var(--border);
+  }
+
+  .featured-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+  }
+  .featured-badge::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .featured-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .featured-title em { font-style: italic; color: var(--gold); }
+
+  .featured-desc {
+    font-size: 14px;
+    color: var(--muted);
+    line-height: 1.8;
+    margin-bottom: 24px;
+  }
+
+  .featured-price {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .featured-price small {
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+    margin-left: 4px;
+  }
+
+  .featured-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .featured-circle {
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  .featured-circle::before {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .featured-icon {
+    font-size: 72px;
+    filter: grayscale(30%);
+  }
+
+  .featured-ring {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.08);
+  }
+
+  /* ── DIVIDER ── */
+  .section-divider {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .section-divider i { color: var(--gold); font-size: 14px; }
+
+  /* ── FOOTER ── */
+  .menu-footer {
+    text-align: center;
+    padding: 80px 24px;
+    border-top: 1px solid var(--border);
+    margin-top: 40px;
+  }
+
+  .footer-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .footer-title em { font-style: italic; color: var(--gold); }
+
+  .footer-sub {
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+  }
+
+  .footer-info {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-bottom: 48px;
+  }
+
+  .footer-info-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  .footer-info-item i { color: var(--gold); font-size: 18px; }
+  .footer-info-item span { font-size: 13px; color: var(--muted); }
+  .footer-info-item strong { font-size: 15px; color: var(--text); }
+
+  .footer-brand {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(136,136,136,0.5);
+    border-top: 1px solid rgba(201,168,76,0.1);
+    padding-top: 32px;
+    margin-top: 32px;
+  }
+
+  .footer-brand a { color: var(--gold); text-decoration: none; }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); transform-origin: top; }
+    50%       { opacity: 0.4; transform: scaleY(0.6); transform-origin: top; }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .menu-item.featured {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .featured-visual { display: none; }
+    .menu-grid { grid-template-columns: 1fr; }
+    .footer-info { gap: 32px; }
+    .nav-tab { padding: 16px 16px; font-size: 10px; letter-spacing: 2px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-diamond"></div>
+    <div class="ornament-line right"></div>
+  </div>
+
+  <p class="hero-label">Est. 2024 &nbsp;·&nbsp; Beirut, Lebanon</p>
+
+  <h1 class="hero-title">La<br><em>Maison</em></h1>
+
+  <p class="hero-subtitle">Fine Dining &nbsp;·&nbsp; Curated Experience</p>
+
+  <div class="hero-divider">
+    <span></span>
+    <i class="fas fa-utensils"></i>
+    <span></span>
+  </div>
+
+  <p class="hero-tagline">"Where every dish tells a story"</p>
+
+  <a class="hero-scroll" href="#menu">
+    <span>Explore Menu</span>
+    <div class="scroll-line"></div>
+  </a>
+</section>
+
+<!-- ── STICKY NAV ── -->
+<nav class="menu-nav" id="menu">
+  <div class="menu-nav-inner">
+    <button class="nav-tab active" data-target="starters">Starters</button>
+    <button class="nav-tab" data-target="soups">Soups & Salads</button>
+    <button class="nav-tab" data-target="mains">Main Course</button>
+    <button class="nav-tab" data-target="desserts">Desserts</button>
+    <button class="nav-tab" data-target="drinks">Beverages</button>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     STARTERS
+════════════════════════════════════════ -->
+<div id="starters">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">To Begin</div>
+      <h2 class="section-title">Starters &amp; <em>Appetizers</em></h2>
+      <div class="section-rule">
+        <span></span><i class="fas fa-leaf"></i><span></span>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- Featured -->
+      <div class="menu-item featured">
+        <div>
+          <div class="featured-badge">Chef's Signature</div>
+          <h3 class="featured-title">Burrata &amp; <em>Heirloom</em> Tomatoes</h3>
+          <p class="featured-desc">
+            Silky fresh burrata from our local dairy, paired with heirloom tomatoes,
+            aged balsamic reduction, cold-pressed olive oil, and micro basil.
+            A timeless classic, elevated.
+          </p>
+          <div class="item-tags" style="margin-bottom:20px;">
+            <span class="tag veg">Vegetarian</span>
+            <span class="tag new">Signature</span>
+          </div>
+          <div class="featured-price">$18 <small>per serving</small></div>
+        </div>
+        <div class="featured-visual">
+          <div class="featured-circle">
+            <div class="featured-ring"></div>
+            <span class="featured-icon">🧀</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">01</div>
+        <div class="item-top">
+          <h3 class="item-name">Seared Foie Gras</h3>
+          <span class="item-price">$24</span>
+        </div>
+        <p class="item-desc">Pan-seared duck liver, brioche toast, fig compote, and aged port wine reduction.</p>
+        <div class="item-tags"><span class="tag new">Chef's Pick</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">02</div>
+        <div class="item-top">
+          <h3 class="item-name">Tiger Prawn Cocktail</h3>
+          <span class="item-price">$21</span>
+        </div>
+        <p class="item-desc">Chilled tiger prawns, house cocktail sauce, lemon zest, dill, and cucumber ribbons.</p>
+        <div class="item-tags"><span class="tag">Seafood</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">03</div>
+        <div class="item-top">
+          <h3 class="item-name">Truffle Arancini</h3>
+          <span class="item-price">$16</span>
+        </div>
+        <p class="item-desc">Crispy risotto balls with black truffle, parmesan, and a silky saffron aioli dip.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">04</div>
+        <div class="item-top">
+          <h3 class="item-name">Beef Carpaccio</h3>
+          <span class="item-price">$22</span>
+        </div>
+        <p class="item-desc">Paper-thin wagyu beef, shaved parmesan, capers, rocket, and white truffle oil.</p>
+        <div class="item-tags"><span class="tag">Raw Bar</span><span class="tag new">Popular</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><i class="fas fa-seedling"></i></div>
+
+<!-- ══════════════════════════════════════
+     SOUPS & SALADS
+════════════════════════════════════════ -->
+<div id="soups">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Fresh &amp; Light</div>
+      <h2 class="section-title">Soups &amp; <em>Salads</em></h2>
+      <div class="section-rule">
+        <span></span><i class="fas fa-bowl-food"></i><span></span>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <div class="menu-item">
+        <div class="item-number">05</div>
+        <div class="item-top">
+          <h3 class="item-name">French Onion Soup</h3>
+          <span class="item-price">$14</span>
+        </div>
+        <p class="item-desc">Slow-caramelized onion broth, sourdough crouton, melted Gruyère and fresh thyme.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">06</div>
+        <div class="item-top">
+          <h3 class="item-name">Lobster Bisque</h3>
+          <span class="item-price">$19</span>
+        </div>
+        <p class="item-desc">Velvety lobster cream soup, cognac, tarragon, and chive crème fraîche garnish.</p>
+        <div class="item-tags"><span class="tag">Seafood</span><span class="tag new">Signature</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">07</div>
+        <div class="item-top">
+          <h3 class="item-name">Caesar Royale</h3>
+          <span class="item-price">$15</span>
+        </div>
+        <p class="item-desc">Romaine hearts, house-made Caesar dressing, anchovy, Parmesan crisps, sourdough croutons.</p>
+        <div class="item-tags"><span class="tag">Classic</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">08</div>
+        <div class="item-top">
+          <h3 class="item-name">Niçoise Salad</h3>
+          <span class="item-price">$17</span>
+        </div>
+        <p class="item-desc">Seared tuna, green beans, olives, quail eggs, potato, Dijon vinaigrette.</p>
+        <div class="item-tags"><span class="tag">Seafood</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><i class="fas fa-fire-flame-curved"></i></div>
+
+<!-- ══════════════════════════════════════
+     MAINS
+════════════════════════════════════════ -->
+<div id="mains">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">The Heart of the Meal</div>
+      <h2 class="section-title">Main <em>Course</em></h2>
+      <div class="section-rule">
+        <span></span><i class="fas fa-drumstick-bite"></i><span></span>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <!-- Featured Main -->
+      <div class="menu-item featured">
+        <div>
+          <div class="featured-badge">Tonight's Special</div>
+          <h3 class="featured-title">Wagyu Beef <em>Tenderloin</em></h3>
+          <p class="featured-desc">
+            Grade A5 wagyu tenderloin, roasted bone marrow butter, truffle jus,
+            seasonal vegetables, and potato pavé. A centerpiece dish crafted
+            for those who seek the extraordinary.
+          </p>
+          <div class="item-tags" style="margin-bottom:20px;">
+            <span class="tag new">Premium Cut</span>
+            <span class="tag">Ask for doneness</span>
+          </div>
+          <div class="featured-price">$68 <small>per person</small></div>
+        </div>
+        <div class="featured-visual">
+          <div class="featured-circle">
+            <div class="featured-ring"></div>
+            <span class="featured-icon">🥩</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">09</div>
+        <div class="item-top">
+          <h3 class="item-name">Pan-Seared Sea Bass</h3>
+          <span class="item-price">$42</span>
+        </div>
+        <p class="item-desc">Wild sea bass, lemon beurre blanc, asparagus, roasted cherry tomatoes, dill oil.</p>
+        <div class="item-tags"><span class="tag">Seafood</span><span class="tag new">Popular</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">10</div>
+        <div class="item-top">
+          <h3 class="item-name">Duck Confit</h3>
+          <span class="item-price">$38</span>
+        </div>
+        <p class="item-desc">48-hour confit duck leg, cherry gastrique, lentils du Puy, crispy leek garnish.</p>
+        <div class="item-tags"><span class="tag new">Chef's Pick</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">11</div>
+        <div class="item-top">
+          <h3 class="item-name">Rack of Lamb</h3>
+          <span class="item-price">$52</span>
+        </div>
+        <p class="item-desc">Herb-crusted rack of lamb, rosemary jus, ratatouille, minted yogurt.</p>
+        <div class="item-tags"><span class="tag">Premium</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">12</div>
+        <div class="item-top">
+          <h3 class="item-name">Wild Mushroom Risotto</h3>
+          <span class="item-price">$29</span>
+        </div>
+        <p class="item-desc">Carnaroli rice, porcini, chanterelle, aged parmesan, white truffle oil, chives.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span><span class="tag new">Popular</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">13</div>
+        <div class="item-top">
+          <h3 class="item-name">Spicy Lobster Linguine</h3>
+          <span class="item-price">$46</span>
+        </div>
+        <p class="item-desc">Half Atlantic lobster, linguine, nduja, San Marzano tomatoes, fresh herbs.</p>
+        <div class="item-tags"><span class="tag spicy">Spicy</span><span class="tag">Seafood</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><i class="fas fa-star"></i></div>
+
+<!-- ══════════════════════════════════════
+     DESSERTS
+════════════════════════════════════════ -->
+<div id="desserts">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Sweet Endings</div>
+      <h2 class="section-title">Desserts &amp; <em>Indulgences</em></h2>
+      <div class="section-rule">
+        <span></span><i class="fas fa-cake-candles"></i><span></span>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <div class="menu-item">
+        <div class="item-number">14</div>
+        <div class="item-top">
+          <h3 class="item-name">Chocolate Fondant</h3>
+          <span class="item-price">$14</span>
+        </div>
+        <p class="item-desc">Warm Valrhona 72% chocolate fondant, vanilla bean ice cream, gold dust.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span><span class="tag new">Popular</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">15</div>
+        <div class="item-top">
+          <h3 class="item-name">Crème Brûlée</h3>
+          <span class="item-price">$12</span>
+        </div>
+        <p class="item-desc">Classic Tahitian vanilla custard, caramelized sugar crust, fresh berries.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span><span class="tag">Classic</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">16</div>
+        <div class="item-top">
+          <h3 class="item-name">Tiramisu Royale</h3>
+          <span class="item-price">$13</span>
+        </div>
+        <p class="item-desc">Italian mascarpone, espresso-soaked ladyfingers, dark cocoa, amaretto.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span><span class="tag new">Signature</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">17</div>
+        <div class="item-top">
+          <h3 class="item-name">Cheese Board</h3>
+          <span class="item-price">$22</span>
+        </div>
+        <p class="item-desc">Curated selection of 5 artisan cheeses, honeycomb, fig jam, candied walnuts, crackers.</p>
+        <div class="item-tags"><span class="tag veg">Vegetarian</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"><i class="fas fa-wine-glass"></i></div>
+
+<!-- ══════════════════════════════════════
+     BEVERAGES
+════════════════════════════════════════ -->
+<div id="drinks">
+  <div class="section">
+    <div class="section-header">
+      <div class="section-tag">Crafted Drinks</div>
+      <h2 class="section-title">Beverages &amp; <em>Cocktails</em></h2>
+      <div class="section-rule">
+        <span></span><i class="fas fa-martini-glass"></i><span></span>
+      </div>
+    </div>
+
+    <div class="menu-grid">
+
+      <div class="menu-item">
+        <div class="item-number">18</div>
+        <div class="item-top">
+          <h3 class="item-name">Signature Old Fashioned</h3>
+          <span class="item-price">$16</span>
+        </div>
+        <p class="item-desc">Bourbon, smoked orange bitters, house-made demerara syrup, cedar wood smoke.</p>
+        <div class="item-tags"><span class="tag new">Signature</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">19</div>
+        <div class="item-top">
+          <h3 class="item-name">French 75</h3>
+          <span class="item-price">$14</span>
+        </div>
+        <p class="item-desc">Gin, fresh lemon juice, simple syrup, topped with champagne. Timeless elegance.</p>
+        <div class="item-tags"><span class="tag">Cocktail</span><span class="tag new">Popular</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">20</div>
+        <div class="item-top">
+          <h3 class="item-name">Cucumber Mint Cooler</h3>
+          <span class="item-price">$9</span>
+        </div>
+        <p class="item-desc">Fresh cucumber, mint, elderflower cordial, sparkling water, lime. Alcohol-free.</p>
+        <div class="item-tags"><span class="tag veg">Non-Alcoholic</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">21</div>
+        <div class="item-top">
+          <h3 class="item-name">House Red / White Wine</h3>
+          <span class="item-price">$12</span>
+        </div>
+        <p class="item-desc">Curated selection rotated seasonally. Ask your server for today's pour.</p>
+        <div class="item-tags"><span class="tag">By the Glass</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">22</div>
+        <div class="item-top">
+          <h3 class="item-name">Espresso Martini</h3>
+          <span class="item-price">$15</span>
+        </div>
+        <p class="item-desc">Double espresso, vodka, Kahlúa, vanilla syrup. Shaken ice cold.</p>
+        <div class="item-tags"><span class="tag new">Popular</span></div>
+      </div>
+
+      <div class="menu-item">
+        <div class="item-number">23</div>
+        <div class="item-top">
+          <h3 class="item-name">Artisan Coffee</h3>
+          <span class="item-price">$6</span>
+        </div>
+        <p class="item-desc">Single-origin pour over, espresso, flat white, or cappuccino — your choice.</p>
+        <div class="item-tags"><span class="tag veg">Hot or Iced</span></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="menu-footer">
+  <h2 class="footer-title">Join Us for an <em>Unforgettable</em> Evening</h2>
+  <p class="footer-sub">Reservations recommended</p>
+
+  <div class="footer-info">
+    <div class="footer-info-item">
+      <i class="fas fa-map-pin"></i>
+      <span>Address</span>
+      <strong>Achrafieh, Beirut</strong>
+    </div>
+    <div class="footer-info-item">
+      <i class="fas fa-clock"></i>
+      <span>Hours</span>
+      <strong>12pm – 11pm Daily</strong>
+    </div>
+    <div class="footer-info-item">
+      <i class="fas fa-phone"></i>
+      <span>Reservations</span>
+      <strong>+961 1 000 000</strong>
+    </div>
+    <div class="footer-info-item">
+      <i class="fab fa-instagram"></i>
+      <span>Follow Us</span>
+      <strong>@lamaison.lb</strong>
+    </div>
+  </div>
+
+  <p class="footer-brand">
+    Digital menu crafted by <a href="https://srx-solutions.onrender.com" target="_blank">SRX Solutions</a>
+    &nbsp;·&nbsp; srxsolutions2026@gmail.com
+  </p>
+</footer>
+
+<script>
+  // Scroll-spy nav
+  const tabs = document.querySelectorAll('.nav-tab');
+  const sections = ['starters','soups','mains','desserts','drinks'];
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.getElementById(tab.dataset.target)
+        .scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  window.addEventListener('scroll', () => {
+    let current = sections[0];
+    sections.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && window.scrollY >= el.offsetTop - 120) current = id;
+    });
+    tabs.forEach(t => {
+      t.classList.toggle('active', t.dataset.target === current);
+    });
+  });
+
+  // Reveal on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 60);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.menu-item, .section-header').forEach(el => {
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
